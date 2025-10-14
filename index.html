@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>不见桃花不见秋-个人文件库</title>
+    <title>不见桃花不见秋-个人云文件库</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         * {
             margin: 0;
@@ -85,6 +84,18 @@
             color: rgba(255, 255, 255, 0.9);
         }
         
+        .search-results-info {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.25);
+            padding: 2px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: none;
+        }
+        
         .nav-buttons {
             display: flex;
             gap: 15px;
@@ -145,6 +156,7 @@
         .filter-options {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
         
         .filter-btn {
@@ -416,6 +428,27 @@
         .file-card:nth-child(10) { animation-delay: 1.0s; }
         .file-card:nth-child(11) { animation-delay: 1.1s; }
         .file-card:nth-child(12) { animation-delay: 1.2s; }
+        
+        /* 无结果提示 */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            display: none;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+        
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
     </style>
 </head>
 <body>
@@ -428,16 +461,17 @@
         
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="搜索文件...">
+            <input type="text" id="searchInput" placeholder="搜索文件名称、类型或日期...">
+            <div class="search-results-info" id="resultsInfo"></div>
         </div>
         
-        
+       
     </header>
     
     <!-- 主要内容区域 -->
     <div class="container">
         <div class="section-title">
-            <h1></h1>
+            <h2></h2>
             <div class="filter-options">
                 <button class="filter-btn active" data-filter="all">全部</button>
                 <button class="filter-btn" data-filter="doc">文档</button>
@@ -453,8 +487,11 @@
         </div>
         
         <div class="file-grid" id="fileGrid">
+        
+        
+            
             <!-- 文件卡片1 - Word文档 -->
-            <div class="file-card" data-name="项目需求文档" data-type="doc">
+            <div class="file-card" data-name="项目需求文档" data-type="doc" data-size="2.4MB" data-date="2023-10-10">
                 <div class="file-header">
                     <div class="file-type doc">
                         <i class="fas fa-file-word"></i>
@@ -477,7 +514,7 @@
             </div>
             
             <!-- 文件卡片2 - PDF -->
-            <div class="file-card" data-name="季度财务报告" data-type="pdf">
+            <div class="file-card" data-name="季度财务报告" data-type="pdf" data-size="1.8MB" data-date="2023-10-05">
                 <div class="file-header">
                     <div class="file-type pdf">
                         <i class="fas fa-file-pdf"></i>
@@ -500,7 +537,7 @@
             </div>
             
             <!-- 文件卡片3 - 图片 -->
-            <div class="file-card" data-name="团队合影" data-type="img">
+            <div class="file-card" data-name="团队合影" data-type="img" data-size="4.2MB" data-date="2023-09-28">
                 <div class="file-header">
                     <div class="file-type img">
                         <i class="fas fa-file-image"></i>
@@ -523,7 +560,7 @@
             </div>
             
             <!-- 文件卡片4 - 视频 -->
-            <div class="file-card" data-name="产品演示视频" data-type="video">
+            <div class="file-card" data-name="产品演示视频" data-type="video" data-size="42.5MB" data-date="2023-10-12">
                 <div class="file-header">
                     <div class="file-type video">
                         <i class="fas fa-file-video"></i>
@@ -546,7 +583,7 @@
             </div>
             
             <!-- 文件卡片5 - 压缩文件 -->
-            <div class="file-card" data-name="源代码" data-type="zip">
+            <div class="file-card" data-name="源代码" data-type="zip" data-size="8.7MB" data-date="2023-10-08">
                 <div class="file-header">
                     <div class="file-type zip">
                         <i class="fas fa-file-archive"></i>
@@ -569,7 +606,7 @@
             </div>
             
             <!-- 文件卡片6 - 音频 -->
-            <div class="file-card" data-name="会议录音" data-type="audio">
+            <div class="file-card" data-name="会议录音" data-type="audio" data-size="12.3MB" data-date="2023-10-11">
                 <div class="file-header">
                     <div class="file-type audio">
                         <i class="fas fa-file-audio"></i>
@@ -592,7 +629,7 @@
             </div>
             
             <!-- 文件卡片7 - 代码 -->
-            <div class="file-card" data-name="数据库设计" data-type="code">
+            <div class="file-card" data-name="数据库设计" data-type="code" data-size="0.8MB" data-date="2023-10-09">
                 <div class="file-header">
                     <div class="file-type code">
                         <i class="fas fa-file-code"></i>
@@ -615,7 +652,7 @@
             </div>
             
             <!-- 文件卡片8 - 电子表格 -->
-            <div class="file-card" data-name="销售数据" data-type="spreadsheet">
+            <div class="file-card" data-name="销售数据" data-type="spreadsheet" data-size="1.2MB" data-date="2023-10-15">
                 <div class="file-header">
                     <div class="file-type spreadsheet">
                         <i class="fas fa-file-excel"></i>
@@ -638,7 +675,7 @@
             </div>
             
             <!-- 文件卡片9 - 演示文稿 -->
-            <div class="file-card" data-name="产品发布会" data-type="presentation">
+            <div class="file-card" data-name="产品发布会" data-type="presentation" data-size="5.6MB" data-date="2023-10-14">
                 <div class="file-header">
                     <div class="file-type presentation">
                         <i class="fas fa-file-powerpoint"></i>
@@ -661,7 +698,7 @@
             </div>
             
             <!-- 文件卡片10 - 文本文件 -->
-            <div class="file-card" data-name="会议纪要" data-type="text">
+            <div class="file-card" data-name="会议纪要" data-type="text" data-size="0.2MB" data-date="2023-10-13">
                 <div class="file-header">
                     <div class="file-type text">
                         <i class="fas fa-file-alt"></i>
@@ -683,59 +720,10 @@
                 </div>
             </div>
             
-          
+<!-- 文件卡片11 - 电脑程序 --> <div class="file-card" data-name="安装程序" data-type="exe"> <div class="file-header"> <div class="file-type exe"> <i class="fas fa-file-download"></i> </div> <div class="file-name">归档-时光卷轴电脑版.exe</div> </div> <div class="file-preview"> <i class="fas fa-file-download"></i> </div> <div class="file-info"> <div class="file-meta"> <span>135MB</span> <span>2025-7-27</span> </div> <div class="file-actions"> <a href="https://lcy21.netlify.app/gd.exe"> <button class="action-btn"><i class="fas fa-download"></i> 下载</button></a> <button class="action-btn"><i class="fas fa-share-alt"></i> 分享</button> </div> </div> </div> <!-- 文件卡片12 - 安卓软件 --> <div class="file-card" data-name="安装程序" data-type="apk"> <div class="file-header"> <div class="file-type apk"> <i class="fas fa-file-download"></i> </div> <div class="file-name">归档-时光卷轴安卓版</div> </div> <div class="file-preview"> <i class="fas fa-file-download"></i> </div> <div class="file-info"> <div class="file-meta"> <span>13.8MB</span> <span>2024-06-25</span> </div> <div class="file-actions"> <a href="https://lcy20.netlify.app/gd.apk"> <button class="action-btn"><i class="fas fa-download"></i> 下载</button></a> <button class="action-btn"><i class="fas fa-share-alt"></i> 分享</button> </div> </div> </div> 
             
-<!-- 文件卡片11 - 电脑程序 -->
-            <div class="file-card" data-name="安装程序" data-type="exe">
-                <div class="file-header">
-                    <div class="file-type exe">
-                        <i class="fas fa-file-download"></i>
-                    </div>
-                    <div class="file-name">归档-时光卷轴电脑版.exe</div>
-                </div>
-                <div class="file-preview">
-                    <i class="fas fa-file-download"></i>
-                </div>
-                <div class="file-info">
-                    <div class="file-meta">
-                        <span>135MB</span>
-                        <span>2025-7-27</span>
-                    </div>
-                    <div class="file-actions">
-                        <a href="https://lcy21.netlify.app/gd.exe">
-                        <button class="action-btn"><i class="fas fa-download"></i> 下载</button></a>
-                        <button class="action-btn"><i class="fas fa-share-alt"></i> 分享</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 文件卡片12 - 安卓软件 -->
-            <div class="file-card" data-name="安装程序" data-type="apk">
-                <div class="file-header">
-                    <div class="file-type apk">
-                        <i class="fas fa-file-download"></i>
-                    </div>
-                    <div class="file-name">归档-时光卷轴安卓版</div>
-                </div>
-                <div class="file-preview">
-                    <i class="fas fa-file-download"></i>
-                </div>
-                <div class="file-info">
-                    <div class="file-meta">
-                        <span>13.8MB</span>
-                        <span>2024-06-25</span>
-                    </div>
-                    <div class="file-actions">
-                        <a href="https://lcy20.netlify.app/gd.apk">
-                        <button class="action-btn"><i class="fas fa-download"></i> 下载</button></a>
-                        <button class="action-btn"><i class="fas fa-share-alt"></i> 分享</button>
-                    </div>
-                </div>
-            </div>
-            
-            
-            <!-- 文件卡片13 - 数据库文件 -->
-            <div class="file-card" data-name="用户数据库" data-type="database">
+            <!-- 文件卡片12 - 数据库文件 -->
+            <div class="file-card" data-name="用户数据库" data-type="database" data-size="32.8MB" data-date="2023-10-06">
                 <div class="file-header">
                     <div class="file-type database">
                         <i class="fas fa-database"></i>
@@ -756,6 +744,13 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- 无结果提示 -->
+            <div class="no-results" id="noResults">
+                <i class="fas fa-file-exclamation"></i>
+                <h3>未找到匹配的文件</h3>
+                <p>请尝试不同的搜索词或筛选条件</p>
+            </div>
         </div>
     </div>
     
@@ -766,27 +761,66 @@
             <a href="#"><i class="fas fa-folder"></i> 文件</a>
             <a href="#"><i class="fas fa-share-alt"></i> 共享</a>
             <a href="#"><i class="fas fa-history"></i> 最近</a>
-          
+           
         </div>
         <div class="footer-info">
-            © 2025 不见桃花不见秋 | 已使用 4.2GB / 不限
+            © 2025 不见桃花不见秋 | 已使用 4.2GB / 15GB
         </div>
     </footer>
     
     <script>
         // 搜索功能
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const cards = document.querySelectorAll('.file-card');
+        const searchInput = document.getElementById('searchInput');
+        const resultsInfo = document.getElementById('resultsInfo');
+        const noResults = document.getElementById('noResults');
+        const fileGrid = document.getElementById('fileGrid');
+        
+        // 获取所有文件卡片
+        const fileCards = Array.from(document.querySelectorAll('.file-card'));
+        const totalFiles = fileCards.length;
+        
+        // 更新结果计数
+        function updateResultsCount(visibleCount) {
+            resultsInfo.textContent = `${visibleCount}个文件`;
+            resultsInfo.style.display = 'block';
             
-            cards.forEach(card => {
+            // 如果没有结果，显示提示
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+        
+        // 初始化显示结果计数
+        updateResultsCount(totalFiles);
+        
+        // 搜索功能
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+            
+            fileCards.forEach(card => {
                 const fileName = card.getAttribute('data-name').toLowerCase();
-                if (fileName.includes(searchTerm)) {
+                const fileType = card.getAttribute('data-type').toLowerCase();
+                const fileSize = card.getAttribute('data-size').toLowerCase();
+                const fileDate = card.getAttribute('data-date').toLowerCase();
+                
+                // 检查是否匹配文件名、类型、大小或日期
+                const matches = fileName.includes(searchTerm) || 
+                                fileType.includes(searchTerm) || 
+                                fileSize.includes(searchTerm) || 
+                                fileDate.includes(searchTerm);
+                
+                if (matches || searchTerm === '') {
                     card.classList.remove('hidden');
+                    visibleCount++;
                 } else {
                     card.classList.add('hidden');
                 }
             });
+            
+            updateResultsCount(visibleCount);
         });
         
         // 筛选功能
@@ -799,23 +833,37 @@
                 this.classList.add('active');
                 
                 const filterType = this.getAttribute('data-filter');
-                const cards = document.querySelectorAll('.file-card');
+                let visibleCount = 0;
                 
-                cards.forEach(card => {
+                fileCards.forEach(card => {
                     if (filterType === 'all') {
                         card.classList.remove('hidden');
+                        visibleCount++;
                     } else {
                         const fileType = card.getAttribute('data-type');
                         if (fileType === filterType) {
                             card.classList.remove('hidden');
+                            visibleCount++;
                         } else {
                             card.classList.add('hidden');
                         }
                     }
                 });
+                
+                updateResultsCount(visibleCount);
             });
         });
+        
+        // 添加搜索提示
+        searchInput.addEventListener('focus', function() {
+            resultsInfo.style.display = 'block';
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            if (this.value === '') {
+                resultsInfo.style.display = 'none';
+            }
+        });
     </script>
-   
 </body>
 </html>
